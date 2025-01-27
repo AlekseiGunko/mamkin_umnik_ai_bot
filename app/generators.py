@@ -46,7 +46,7 @@ async def gpt_vision(req, model_name, file):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': f'Bearer{AITOKEN}'
+        'Authorization': f'Bearer {AITOKEN}',
     }
 
     payload = {
@@ -71,9 +71,13 @@ async def gpt_vision(req, model_name, file):
                 "text": req,
             }
         )
+
+    proxy_url = PROXY
+
     async with aiohttp.ClientSession() as session:
-        async with session.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload) as response:
+        async with session.post("https://api.openai.com/v1/chat/completions", headers=headers,
+                                json=payload, proxy=proxy_url) as response:
             completion = await response.json()
             print(completion)
-    return {'response': completion['choice'][0]['message']['content'],
+    return {'response': completion['choices'][0]['message']['content'],
             'usage': completion['usage']['total_tokens']}

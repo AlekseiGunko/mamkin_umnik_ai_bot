@@ -25,6 +25,10 @@ async def get_user(session ,tg_id):
     return await session.scalar(select(User).where(User.tg_id == tg_id))
 
 
+async def get_users(session):
+    return await session.scalars(select(User))
+
+
 @connection
 async def calculate(session ,tg_id, summ, model_name, user):
     model = await session.scalar(select(AiModel).where(AiModel.name == model_name))

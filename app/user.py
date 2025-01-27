@@ -94,21 +94,3 @@ async def chat_response_image(message: Message, state: FSMContext):
         await state.set_state(Image.text)
     else:
         await message.answer('Недостаточно средств на балансе.')
-
-
-#@user_r.message(Chat.text, F.photo)
-#async def chat_response(message: Message, state: FSMContext):
-#    user = await get_user(message.from_user.id)
-#    if Decimal(user.balance) > 0:
-#        await state.set_state(Chat.wait)
-#        file = await message.bot.get_file(message.photo[-1].file_id)
-#        file_path = file.file_path
-#        file_name = uuid.uuid4()
-#        await message.bot.download_file(file_path, f'{file_name}.jpeg')
-#        response = await gpt_vision(message.caption, 'gpt-4o', f'{file_name}.jpeg')
-#        await calculate(message.from_user.id, response['usage'], 'gpt-4o', user)
-#        await message.answer(response['response'])
-#        await state.set_state(Chat.text)
-#        os.remove(f'{file_name}.jpeg')
-#    else:
-#        await message.answer('Недостаточно средств на балансе.')
